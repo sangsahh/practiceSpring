@@ -1,6 +1,7 @@
-package ko.spring.start.practice;
+package ko.spring.start.practice.question;
 
 import jakarta.persistence.*;
+import ko.spring.start.practice.answer.Answer;
 import lombok.Getter;
 import lombok.Setter;
 
