@@ -13,14 +13,13 @@ import java.util.List;
 @Controller
 public class QuestionController {
 
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @GetMapping("/question/list")
 //    @ResponseBody
     public String list(Model model) {
-        List<Question> list = this.questionRepository.findAll();
-        System.out.println("질문 개수: " + list.size());
-        model.addAttribute("questionList", list);
+        List<Question> questionList = this.questionService.getList();
+        model.addAttribute("questionList", questionList);
         return "question_list";
 
     }
