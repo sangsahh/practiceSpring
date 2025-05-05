@@ -5,9 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-    <table>
-        <thead>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<div class="container my-3">
+    <table class="table">
+        <thead class="table-dark">
         <tr>
+            <th>번호</th>
             <th>
                 제목
             </th>
@@ -17,14 +20,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question : ${questionList}">
+        <tr th:each="question, loop : ${questionList}">
+            <td th:text="${loop.count}"></td>
             <td><a th:href="@{|/question/detail/${question.id}|}" th:text="${
             question.subject}"></a></td>
-            <td th:text="${question.createdDate}"></td>
+            <td th:text="${#temporals.format(question.createdDate, 'yyyy-MM-ddHH:mm')}"></td>
         </tr>
         </tbody>
 
 
     </table>
+</div>
 </body>
 </html>
