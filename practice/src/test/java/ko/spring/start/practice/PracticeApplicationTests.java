@@ -4,6 +4,7 @@ import ko.spring.start.practice.answer.Answer;
 import ko.spring.start.practice.answer.AnswerRepository;
 import ko.spring.start.practice.question.Question;
 import ko.spring.start.practice.question.QuestionRepository;
+import ko.spring.start.practice.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,22 +19,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PracticeApplicationTests {
 
 	@Autowired
-	private QuestionRepository questionRepository;
+	private QuestionService questionService;
 
 	@Autowired
 	private AnswerRepository answerRepository;
 
+
 	@Test
 	void testJpa() {
-		Optional<Question> oq = this.questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question q = oq.get();
-
-		Answer a = new Answer();
-		a.setContent("네 자동으로 생성됩니다.");
-		a.setQuestion(q);
-		a.setCreatedDate(LocalDateTime.now());
-		this.answerRepository.save(a);
+		for (int i = 1; i <= 300; i++) {
+			String subject = String.format("테스트 데이터입니다:[%03d]", 1);
+			String content = "내용무";
+			this.questionService.create(subject, content);
+		}
 	}
 
 
