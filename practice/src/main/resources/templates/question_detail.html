@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html lang="en" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,6 +14,10 @@
                 <div class="card-text" style="white-space: pre-line" th:text="${question.content}"></div>
                 <div class="d-flex justify-content-end">
                     <div class="badge bg-light text-dark p-2 text-start">
+                        <div class="mb-2">
+                            <span th:if="${question.author != null}" th:text="${question.
+                            author.username}"></span>
+                        </div>
                         <div th:text="${#temporals.format(question.createdDate, 'yyyy-MM-dd HH:mm')}"></div>
                     </div>
                 </div>
@@ -27,6 +32,10 @@
                 <div class="card-text" style="white-space: pre-line" th:text="${answer.content}"></div>
                 <div class="d-flex justify-content-end">
                     <div class="badge bg-light text-dark p-2 text-start">
+                        <div class="mb-2">
+                            <span th:if="${question.author != null}" th:text="${question.
+                            author.username}"></span>
+                        </div>
                         <div th:text="${#temporals.format(answer.createdDate, 'yyyy-MM-dd HH:mm')}"></div>
                     </div>
                 </div>
@@ -37,7 +46,8 @@
         <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
             <!--        th:replace 를 이용해서 템플릿 내에 공통 템플릿을 삽입 가능 -->
             <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-            <textarea th:field="*{content}" id="content" rows="10" class="form-control"></textarea>
+            <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}"  rows="10" class="form-control"></textarea>
+            <textarea sec:authorize="isAuthenticated()" th:field="*{content}"  rows="10" class="form-control"></textarea>
             <input type="submit" value="답변등록" class="btn btn-primary my-2">
         </form>
     </div>

@@ -2,6 +2,7 @@ package ko.spring.start.practice.question;
 
 import jakarta.persistence.*;
 import ko.spring.start.practice.answer.Answer;
+import ko.spring.start.practice.user.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
+
+    @ManyToOne
+    private SiteUser author;
 }
