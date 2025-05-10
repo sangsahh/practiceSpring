@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,4 +33,8 @@ public class Question {
     private SiteUser author;
 
     private LocalDateTime modifiyDate;
+
+    @ManyToMany
+//   List 보다 Set을 쓰는 이유 : voter 속성값이 서로 중복되지 않도록 하기 위해서
+    Set<SiteUser> voter;
 }
