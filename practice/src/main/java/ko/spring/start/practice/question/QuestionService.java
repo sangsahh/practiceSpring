@@ -57,4 +57,10 @@ public class QuestionService {
         question.setModifiyDate(LocalDateTime.now());
         this.questionRepository.save(question);
     }
+
+    //삭제
+    public void delete(Question question) {
+        this.questionRepository.delete(question);
+    }
+
 }
