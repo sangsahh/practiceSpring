@@ -32,3 +32,4 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             +"      or u2.content like %:kw% ")
     Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
 }
+//<!--다시-->
