@@ -119,3 +119,4 @@ public class QuestionController {
         return String.format("redirect:/question/detail/%s", id);
     }
 }
+//<!--다시-->
