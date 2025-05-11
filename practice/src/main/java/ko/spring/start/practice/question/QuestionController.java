@@ -30,9 +30,11 @@ public class QuestionController {
     //paging 구현
     @GetMapping("/list")
 //    @ResponseBody
-    public String list(Model model,@RequestParam(value="page", defaultValue = "0") int page) {
-        Page<Question> paging = this.questionService.getList(page);
+    public String list(Model model,@RequestParam(value="page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Question> paging = this.questionService.getList(page, kw);
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "question_list";
     }
 
@@ -56,7 +58,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult
-    , Principal principal) {
+            , Principal principal) {
         if (bindingResult.hasErrors()) {
             return "question_form";
         }
@@ -65,11 +67,11 @@ public class QuestionController {
         return "redirect:/question/list"; //질문 저장후 질문목록으로 이동
     }
 
-//    질문 수정
+    //    질문 수정
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id
-    , Principal principal) {
+            , Principal principal) {
         Question question = this.questionService.getQuestion(id);
         if(!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
@@ -78,7 +80,7 @@ public class QuestionController {
         questionForm.setContent(question.getContent());
         return "question_form";
     }
-//    질문 수정 처리
+    //    질문 수정 처리
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
@@ -95,7 +97,7 @@ public class QuestionController {
         return String.format("redirect:/question/detail/%s", id);
     }
 
-//    질문 삭제 처리
+    //    질문 삭제 처리
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
